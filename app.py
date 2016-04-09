@@ -8,6 +8,7 @@ app = Flask(__name__)
 def login():
     error = None
     if request.method == 'POST':
+        print request.form['username']
         return redirect(url_for('home'))
     return render_template('login.html', error = error);
 
