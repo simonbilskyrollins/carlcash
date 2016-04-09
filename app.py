@@ -8,13 +8,12 @@ app = Flask(__name__)
 def login():
     error = None
     if request.method == 'POST':
-	return redirect(url_for('home'))
+        return redirect(url_for('home'))
     return render_template('login.html', error = error);
 
-# use decorators to link the function to a url
 @app.route('/index.html')
 def home():
-    return render_template('index.html')  # return a string
+    return render_template('index.html')
 
 # start the server with the 'run()' method
 if __name__ == '__main__':
