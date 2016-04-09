@@ -7,7 +7,7 @@ app = Flask(__name__)
 # use decorators to link the function to a url
 @app.route('/')
 def home():
-    return render_template('origindex.html')  # return a string
+    return render_template('index.html')  # return a string
 
 # start the server with the 'run()' method
 if __name__ == '__main__':
