@@ -41,7 +41,8 @@ def home():
     json_obj = JSON
 
     temp = 0
-    if guest_swipes > 3:
+    
+    if int(guest_swipes) > 3:
         temp = meals_left
         meals_left = guest_swipes
         guest_swipes = temp
