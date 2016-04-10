@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def login():
     error = None
     if request.method == 'POST':
@@ -22,7 +22,7 @@ def login():
         session['mylist'] = mylist
         return redirect(url_for('home'))
 
-    return render_template('login.html', error = error)
+    return render_template('login.html', error=error)
 
 
 @app.route('/index.html')
