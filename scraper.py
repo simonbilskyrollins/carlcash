@@ -97,12 +97,12 @@ def main(un, pw):
     schiller_transactions = '['
     for t in transactions:
         comment = t[1].items()[0][1]
-        amount = float(t[1].items()[1][1])
+        amount = t[1].items()[1][1]
         day = t[1].items()[5][1]
         if 'credit' in amount:
             amount = -float(amount.split('$')[1])
         else:
-            amount = amount[2:]
+            amount = float(amount.split('$')[1])
         if comment == 'Dining Dollars':
             dining_transactions += "{day: '%s', balance: %s}, " % (day, dd_balance)
             dd_balance = dd_balance + amount
