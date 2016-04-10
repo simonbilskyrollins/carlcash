@@ -7,6 +7,7 @@ import mechanize
 import json
 import re
 import time
+import datetime
 from bs4 import BeautifulSoup
 
 def main(un, pw):
@@ -79,44 +80,46 @@ def main(un, pw):
                 elif col_type == 'date':
                     row_data[col_type] = date
             date = row_data['date']
-            week = getWeek(date)
-            row_data['week'] = week
+            day = getDay(date)
+            row_data['day'] = day
             data[i] = row_data
         table_data.append(data)
     output['spending'] = table_data[0]
     output['swipes'] = table_data[1]
 
-    outputJSON = json.dumps(output)
-    return outputJSON
+    transactions = []
+    for k,v in output['spending'].items():
+        transactions.append((k,v))
+    transactions.sort(key=lambda tup: tup[0], reverse=True)
+    dd_balance = float(output['dining_dollars'])
+    s_balance = float(output['schillers'])
+    dining_transactions = '['
+    schiller_transactions = '['
+    for t in transactions:
+        print t[1].items()
+        comment = t[1].items()[0][1]
+        amount = float(t[1].items()[1][1][2:])
+        day = t[1].items()[5][1]
+        if comment == 'Dining Dollars':
+            dining_transactions += '{day: %s, balance: %s,}, ' % (day, dd_balance)
+            dd_balance = dd_balance + amount
+        if comment == 'Schillers-Student':
+            schiller_transactions += '{day: %s, balance: %s,}, ' % (day, s_balance)
+            s_balance = s_balance + amount
+    dining_transactions = dining_transactions[:-2] + ']'
+    schiller_transactions = schiller_transactions[:-2] + ']'
 
-def getWeek(date):
-    month = int(time.strftime("%m"))
-    day = int(time.strftime("%d"))
-    week = 0
-    if ((month==3) and (28<=day) or (month==4) and (day<=3)):
-        week=1
-    elif ((month==4) and (4<=day) and (day<=10)):
-        week=2
-    elif ((month==4) and (11<=day) and (day<=17)):
-        week=3
-    elif ((month==4) and (18<=day) and (day<=24)):
-        week=4
-    elif ((month==4) and (25<=day) or (month==5) and (day<=1)):
-        week=5
-    elif ((month==5) and (2<=day) and (day<=8)):
-        week=6
-    elif ((month==5) and (9<=day) and (day<=15)):
-        week=7
-    elif ((month==5) and (16<=day) and (day<=22)):
-        week=8
-    elif ((month==5) and (23<=day) and (day<=29)):
-        week=9
-    elif ((month==5) and (30<=day) or (month==6) and (day<=7)):
-        week=10
-    return week
+    outputJSON = json.dumps(output)
+    return outputJSON, dining_transactions, schiller_transactions
+
+def getDay(date_string):
+    end_of_term = datetime.date(2016, 6, 7)
+    nice_date = datetime.datetime.strptime(date_string, '%a, %b %d %Y').date()
+    delta = end_of_term - nice_date
+    day = delta.days
+    return 72 - day
 
 if __name__ == '__main__':
     un = sys.argv[1]
     pw = sys.argv[2]
     outputJSON = main(un, pw)
-    print outputJSON

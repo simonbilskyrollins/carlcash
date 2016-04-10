@@ -36,7 +36,8 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <script>data={{json_obj|safe}};</script>
+    <script>dining_transactions={{dining_transactions|safe}};</script>
+    <script>schiller_transactions={{schiller_transactions|safe}};</script>
 
 </head>
 
@@ -170,23 +171,23 @@
                 <div class="col-lg-8">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> Dining Dollars Spending
+                            <i class="fa fa-bar-chart-o fa-fw"></i> Dining Dollar Spending
                             <div class="pull-right"></div>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div id="morris-area-chart"></div>
-                            <center>Weeks</center>
+                            <center>Days</center>
                         </div>
                             
                         <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> Schillers Spending
+                            <i class="fa fa-bar-chart-o fa-fw"></i> Schiller Spending
                             <div class="pull-right"></div>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div id="morris-area-chart1"></div>
-                            <center>Weeks</center>
+                            <center>Days</center>
                         </div>
 
                         <!-- /.panel-body -->
@@ -382,16 +383,16 @@
             
             Morris.Line({
                 element: 'morris-area-chart',
-                data: data,
-                xkey: "week",
-                ykeys: ['currentRate','ideal'],
-                labels: ['currentRate','ideal'],
+                data: dining_transactions,
+                xkey: "day",
+                ykeys: ['balance'],
+                labels: ['Dining Dollar Balance'],
                 pointSize: 2,
                 hideHover: 'auto',
                 hoverCallback: function (index, options, content, row) { 
                     var pos = content.search("<div class='morris-hover-point'");
                     var res = content.slice(pos, content.length);
-                    return "Week " + index + "<p>" + res;
+                    return "Day " + index + "<p>" + res;
                 },
                 resize: true,
                 behaveLikeLine: true,
@@ -400,50 +401,16 @@
             
             Morris.Line({
                 element: 'morris-area-chart1',
-                data: [{
-                    week: 0,
-                    schillers: 2.5,
-                }, {
-                    week: 1,
-                    schillers: 22.5,
-                }, {
-                    week: 2,
-                    schillers: 20,
-                }, {
-                    week: 3,
-                    schillers: 15,
-                }, {
-                    week: 4,
-                    schillers: 15,
-                }, {
-                    week: 5,
-                    schillers: 10,
-                }, {
-                    week: 6,
-                    schillers: 10,
-                }, {
-                    week: 7,
-                    schillers: 5,
-                }, {
-                    week: 8,
-                    schillers: 5,
-                }, {
-                    week: 9,
-                    schillers: 25,
-                }, {
-                    week: 10,
-                    schillers: 20  
-                }],
-                
-                xkey: "week",
-                ykeys: ['schillers'],
-                labels: ['schillers'],
+                data: schiller_transactions,
+                xkey: "day",
+                ykeys: ['balance'],
+                labels: ['Schiller Balance'],
                 pointSize: 2,
                 hideHover: 'auto',
                 hoverCallback: function (index, options, content, row) { 
                     var pos = content.search("<div class='morris-hover-point'");
                     var res = content.slice(pos, content.length);
-                    return "Week " + index + "<p>" + res;
+                    return "Day " + index + "<p>" + res;
                 },
                 resize: true,
                 smooth: false,
