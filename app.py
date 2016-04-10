@@ -73,7 +73,7 @@ def home():
 
     week, diningDollarBudget, dailyDiningBudget, laundryLeft, LDCCardSwipes, burtonCardSwipes = getASI(parseJSON)
 
-    return render_template('index.html', dining= "$" + dining_dollars, meals=meals_left, schill="$" + schillers, guest=guest_swipes, spending=spending, swipes=swipes, laundry=laundryLeft, diningBudget=diningDollarBudget, ldc=LDCCardSwipes, burton=burtonCardSwipes, dining_transactions=dining_transactions, schiller_transactions=schiller_transactions)
+    return render_template('index.html', dining= "$" + dining_dollars, meals=meals_left, schill="$" + schillers, guest=guest_swipes, spending=spending, swipes=swipes, laundry=laundryLeft, diningBudget=diningDollarBudget, dailyDiningBudget=dailyDiningBudget, ldc=LDCCardSwipes, burton=burtonCardSwipes, dining_transactions=dining_transactions, schiller_transactions=schiller_transactions)
 
 
 def getASI(parseJSON):
