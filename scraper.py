@@ -90,11 +90,10 @@ def main(un, pw):
     if len(table_data) == 2:
         output['spending'] = table_data[0]
         output['swipes'] = table_data[1]
-    print table_data[0][4]['location']
     elif 'LDC' in table_data[0][4]['location'] or 'Burton' in table_data[0][4]['location']:
-    output['swipes'] = table_data[0]
+    	output['swipes'] = table_data[0]
     else:
-    output['spending'] = table_data[0]
+    	output['spending'] = table_data[0]
 
     transactions = []
     dining_transactions = ''
