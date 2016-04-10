@@ -96,11 +96,12 @@ def main(un, pw):
     dining_transactions = '['
     schiller_transactions = '['
     for t in transactions:
+        print t
         comment = t[1].items()[0][1]
         amount = t[1].items()[1][1]
         day = t[1].items()[5][1]
         if 'credit' in amount:
-            amount = -float(amount.split('$')[1])
+            amount = -1.00 * float(amount.split('$')[1])
         else:
             amount = float(amount.split('$')[1])
         if comment == 'Dining Dollars':
