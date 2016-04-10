@@ -10,6 +10,7 @@ import time
 import datetime
 from bs4 import BeautifulSoup
 
+
 def main(un, pw):
     br = mechanize.Browser()
 
@@ -108,9 +109,13 @@ def main(un, pw):
             s_balance = s_balance + amount
     dining_transactions = dining_transactions[:-2] + ']'
     schiller_transactions = schiller_transactions[:-2] + ']'
+    if len(schiller_transactions) < 2:
+        dining_transactions = '[{day: 0, balance: %s,}, {day: %s, balance: %s,}]' % (dd_balance, getDay(time.strftime('%a, %b %d %Y')), dd_balance)
+        schiller_transactions = '[{day: 0, balance: %s,}, {day: %s, balance: %s,}]' % (s_balance, getDay(time.strftime('%a, %b %d %Y')), s_balance)
 
     outputJSON = json.dumps(output)
     return outputJSON, dining_transactions, schiller_transactions
+
 
 def getDay(date_string):
     end_of_term = datetime.date(2016, 6, 7)
