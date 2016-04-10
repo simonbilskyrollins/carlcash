@@ -78,14 +78,15 @@ def getASI(parseJSON):
 
     week = getWeek()
     diningDollars = diningDollarBudget(dining_dollars, week)
+    dailyDiningBudget = '$' + str('%.2f' % round(float(diningDollars[1:])/7.00, 2))
     laundryLoadsLeft = laundryLeft(schillers)
     LDCCardSwipes, burtonCardSwipes = LDCBurtonSwipes(swipes)
 
-    return week, diningDollars, laundryLoadsLeft, LDCCardSwipes, burtonCardSwipes
+    return week, diningDollars, dailyDiningBudget, laundryLoadsLeft, LDCCardSwipes, burtonCardSwipes
 
 
 def diningDollarBudget(dollarsLeft, week):
-    return "$" + str(round(dollarsLeft/(10-week), 2))
+    return "$" + str('%.2f' % round(dollarsLeft/(10-week), 2))
 
 
 def laundryLeft(schillersLeft):

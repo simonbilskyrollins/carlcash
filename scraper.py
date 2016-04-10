@@ -76,6 +76,8 @@ def main(un, pw):
             row_data = {}
             for col in cols:
                 col_type = col['class'][0]
+                if col_type == '':
+                    col_type = 'amount' #handle edge case where amount is actually credit amount which is parsed as empty string
                 if col.get_text():
                     row_data[col_type] = col.get_text()
                 elif col_type == 'date':
@@ -124,15 +126,12 @@ def main(un, pw):
     	schiller_transactions = schiller_transactions[:-2] + ']'
     	if len(dining_transactions) < 2:
             dining_transactions = "[{day: '%s', balance: %s}, {day: '%s', balance: %s}]" % (datetime.datetime.strftime(datetime.datetime.now() + datetime.timedelta(days=-1), '%Y-%m-%d %H:%M'), dd_balance, time.strftime('%Y-%m-%d %H:%M'), dd_balance)
-    	if len(schiller_transactions) < 2:
-            schiller_transactions = "[{day: '%s', balance: %s}, {day: '%s', balance: %s}]" % (datetime.datetime.strftime(datetime.datetime.now() + datetime.timedelta(days=-1), '%Y-%m-%d %H:%M'), s_balance, time.strftime('%Y-%m-%d %H:%M'), s_balance)
 
     outputJSON = json.dumps(output)
     return outputJSON, dining_transactions, schiller_transactions
 
 
 def getDay(date_string):
-    end_of_term = datetime.date(2016, 6, 7)
     nice_date = datetime.datetime.strptime(date_string, '%a, %b %d %Y %I:%M %p')
     morris_date = datetime.datetime.strftime(nice_date, '%Y-%m-%d %H:%M')
     return morris_date

@@ -157,23 +157,21 @@
                 <div class="col-lg-8">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> Dining Dollar Spending in Last Two Weeks
+                            <i class="fa fa-bar-chart-o fa-fw"></i> Dining Dollar Balance, Last Two Weeks
                             <div class="pull-right"></div>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div id="morris-area-chart"></div>
-                            <center>Days</center>
                         </div>
                             
                         <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> Schiller Spending in Last Two Weeks
+                            <i class="fa fa-bar-chart-o fa-fw"></i> Schiller Balance, Last Two Weeks
                             <div class="pull-right"></div>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div id="morris-area-chart1"></div>
-                            <center>Days</center>
                         </div>
 
                         <!-- /.panel-body -->
@@ -181,7 +179,48 @@
                     <!-- /.panel -->
                 </div>    
                 <!-- /.col-lg-8 -->
-
+                <div class="col-lg-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i> Additional Spending Information
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="list-group">
+                                <a class="list-group-item">
+                                    <i class="fa fa-dollar fa-fw"></i> Weekly Dining Dollar Budget
+                                    <span class="pull-right text-muted small"><em>{{diningBudget}}</em>
+                                    </span>
+                                </a>
+                                <a class="list-group-item">
+                                    <i class="fa fa-dollar fa-fw"></i> Daily Dining Dollar Budget
+                                    <span class="pull-right text-muted small"><em>{{dailyDiningBudget}}</em>
+                                    </span>
+                                </a>
+                                <a class="list-group-item">
+                                    <i class="fa fa-spoon fa-fw"></i> Meal Swipes in Burton
+                                    <span class="pull-right text-muted small"><em>{{burton}}</em>
+                                    </span>
+                                </a>
+                                 <a class="list-group-item">
+                                    <i class="fa fa-spoon fa-fw"></i> Meal Swipes in LDC
+                                    <span class="pull-right text-muted small"><em>{{ldc}}</em>
+                                    </span>
+                                </a>
+                                <a class="list-group-item">
+                                    <i class="fa fa-money fa-fw"></i> Laundry Cycles Left
+                                    <span class="pull-right text-muted small"><em>{{laundry}}</em>
+                                    </span>
+                                </a>
+                            </div>
+                            <!-- /.list-group -->
+<!--                            <a href="#" class="btn btn-default btn-block">View All Alerts</a>-->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>    
+                <!-- /.col-lg-4 -->
                 <div class="col-lg-4">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -202,41 +241,6 @@
             </div>
             <!-- /.row -->
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-bell fa-fw"></i> Additional Spending Information
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <div class="list-group">
-                                <a class="list-group-item">
-                                    <i class="fa fa-dollar fa-fw"></i> Weekly Dining Dollar Budget
-                                    <span class="pull-right text-muted small"><em>{{diningBudget}}</em>
-                                    </span>
-                                </a>
-                                <a class="list-group-item">
-                                    <i class="fa fa-money fa-fw"></i> Laundry Cycles Left
-                                    <span class="pull-right text-muted small"><em>{{laundry}}</em>
-                                    </span>
-                                </a>
-                                <a class="list-group-item">
-                                    <i class="fa fa-spoon fa-fw"></i> Meal Swipes in Burton
-                                    <span class="pull-right text-muted small"><em>{{burton}}</em>
-                                    </span>
-                                </a>
-                                 <a class="list-group-item">
-                                    <i class="fa fa-spoon fa-fw"></i> Meal Swipes in LDC
-                                    <span class="pull-right text-muted small"><em>{{ldc}}</em>
-                                    </span>
-                                </a>
-                            </div>
-                            <!-- /.list-group -->
-<!--                            <a href="#" class="btn btn-default btn-block">View All Alerts</a>-->
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
                     
     <!-- /#wrapper -->
 
