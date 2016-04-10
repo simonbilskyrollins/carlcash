@@ -34,11 +34,10 @@ def home():
     JSON, dining_transactions, schiller_transactions = scraper.main(infoList[0], infoList[1])
 
     parseJSON = json.loads(JSON)
-    dining_dollars = "$" +  parseJSON["dining_dollars"]
-    schillers = "$" +  parseJSON["schillers"]
+    dining_dollars = "$" + parseJSON["dining_dollars"]
+    schillers = "$" + parseJSON["schillers"]
     guest_swipes = parseJSON["guest_meals"]
     meals_left = parseJSON["meals_week"]
-    json_obj = JSON
 
     temp = 0
     
@@ -49,9 +48,9 @@ def home():
 
     spending = parseJSON["spending"]
     swipes = parseJSON["swipes"]
-    week, diningDollarBudget, laundryLeft, LDCCardSwipes, burtonCardSwipes = getASI(parseJSON)
-
-    return render_template('index.html', dining=dining_dollars, meals=meals_left, schill=schillers, guest=guest_swipes, spending=spending, swipes=swipes, laundry=laundryLeft, diningBudget=diningDollarBudget, ldc=LDCCardSwipes, burton=burtonCardSwipes, dining_transactions=dining_transactions, schiller_transactions=schiller_transactions)
+    week, diningDollarBudget, dailyDiningBudget, laundryLeft, LDCCardSwipes, burtonCardSwipes = getASI(parseJSON)
+    print dailyDiningBudget
+    return render_template('index.html', dining=dining_dollars, meals=meals_left, schill=schillers, guest=guest_swipes, spending=spending, swipes=swipes, laundry=laundryLeft, diningBudget=diningDollarBudget, dailyDiningBudget=dailyDiningBudget, ldc=LDCCardSwipes, burton=burtonCardSwipes, dining_transactions=dining_transactions, schiller_transactions=schiller_transactions)
 
 
 def getASI(parseJSON):
@@ -61,14 +60,15 @@ def getASI(parseJSON):
 
     week = getWeek()
     diningDollars = diningDollarBudget(dining_dollars, week)
+    dailyDiningBudget = '$' + str('%.2f' % round(float(diningDollars[1:])/7.00, 2))
     laundryLoadsLeft = laundryLeft(schillers)
     LDCCardSwipes, burtonCardSwipes = LDCBurtonSwipes(swipes)
 
-    return week, diningDollars, laundryLoadsLeft, LDCCardSwipes, burtonCardSwipes
+    return week, diningDollars, dailyDiningBudget, laundryLoadsLeft, LDCCardSwipes, burtonCardSwipes
 
 
 def diningDollarBudget(dollarsLeft, week):
-    return "$" + str(round(dollarsLeft/(10-week), 2))
+    return "$" + str('%.2f' % round(dollarsLeft/(10-week), 2))
 
 
 def laundryLeft(schillersLeft):
