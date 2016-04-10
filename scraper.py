@@ -5,7 +5,6 @@ Usage: python scrapeScript.py [username] [password]
 import sys
 import mechanize
 import json
-import re
 import time
 import datetime
 from bs4 import BeautifulSoup
@@ -89,8 +88,8 @@ def main(un, pw):
     output['swipes'] = table_data[1]
 
     transactions = []
-    for k,v in output['spending'].items():
-        transactions.append((k,v))
+    for k, v in output['spending'].items():
+        transactions.append((k, v))
     transactions.sort(key=lambda tup: tup[0], reverse=True)
     dd_balance = float(output['dining_dollars'])
     s_balance = float(output['schillers'])
@@ -113,7 +112,6 @@ def main(un, pw):
     if len(schiller_transactions) < 2:
         schiller_transactions = '[{day: 0, balance: %s,}, {day: %s, balance: %s}]' % (s_balance, getDay(time.strftime('%a, %b %d %Y')), s_balance)
 
-    print dining_transactions
     outputJSON = json.dumps(output)
     return outputJSON, dining_transactions, schiller_transactions
 

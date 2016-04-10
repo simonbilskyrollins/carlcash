@@ -112,7 +112,6 @@ def getWeek():
         week=9
     elif ((month==5) and (30<=day) or (month==6) and (day<=7)):
         week=10
-    print week
     return week
 
 
