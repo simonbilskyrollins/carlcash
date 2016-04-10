@@ -19,9 +19,6 @@ def main(un, pw):
 
     br.select_form(nr = 1)
 
-    #un = raw_input("Enter username: ")
-    #pw = raw_input("Enter plaintext password, awk: ")
-
     br["username"] = un
     br["password"] = pw
 
@@ -31,10 +28,10 @@ def main(un, pw):
 
     soup = BeautifulSoup(logincheck, 'html.parser')
 
-    for p in soup.find_all('p'):
-	p = p.get_text()
-	if p.find("Dining") == -1:
-	    return '', '', ''
+    for p in soup.p:
+		
+    	if "College ID" not in p:
+   	    return '', '', ''
 
     output = {}
 

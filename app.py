@@ -35,7 +35,7 @@ def home():
 
     JSON, dining_transactions, schiller_transactions = scraper.main(infoList[0], infoList[1])
 
-    if JSON == '':
+    if not JSON:
 	return redirect(url_for('login'))
 
     parseJSON = json.loads(JSON)
