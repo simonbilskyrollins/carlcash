@@ -108,9 +108,9 @@ def main(un, pw):
     dining_transactions = dining_transactions[:-2] + ']'
     schiller_transactions = schiller_transactions[:-2] + ']'
     if len(dining_transactions) < 2:
-        dining_transactions = '[{day: 0, balance: %s,}, {day: %s, balance: %s}]' % (dd_balance, getDay(time.strftime('%a, %b %d %Y')), dd_balance)
+        dining_transactions = '[{day: 0, balance: %s,}, {day: %s, balance: %s}]' % (dd_balance, getDay(time.strftime('%a, %b %d %Y %H:%M')), dd_balance)
     if len(schiller_transactions) < 2:
-        schiller_transactions = '[{day: 0, balance: %s,}, {day: %s, balance: %s}]' % (s_balance, getDay(time.strftime('%a, %b %d %Y')), s_balance)
+        schiller_transactions = '[{day: 0, balance: %s,}, {day: %s, balance: %s}]' % (s_balance, getDay(time.strftime('%a, %b %d %Y %H:%M')), s_balance)
 
     outputJSON = json.dumps(output)
     return outputJSON, dining_transactions, schiller_transactions
