@@ -47,6 +47,7 @@ def main(un, pw):
 
     meal_swipes = {}
     for ul in soup.find_all('ul'):
+	
         for li in ul.find_all('li'):
             li = li.get_text()
             if ':' in li:
@@ -84,38 +85,47 @@ def main(un, pw):
             row_data['day'] = day
             data[i] = row_data
         table_data.append(data)
-    output['spending'] = table_data[0]
-    output['swipes'] = table_data[1]
+    if len(table_data) == 2:
+    	output['spending'] = table_data[0]
+    	output['swipes'] = table_data[1]
+	print table_data[0][4]['location']
+    elif 'LDC' in table_data[0][4]['location'] or 'Burton' in table_data[0][4]['location']:
+	output['swipes'] = table_data[0]
+    else:
+ 	output['spending'] = table_data[0]
 
     transactions = []
-    for k, v in output['spending'].items():
-        transactions.append((k, v))
-    transactions.sort(key=lambda tup: tup[0], reverse=True)
-    dd_balance = float(output['dining_dollars'])
-    s_balance = float(output['schillers'])
-    dining_transactions = '['
-    schiller_transactions = '['
-    for t in transactions:
-        print t
-        comment = t[1].items()[0][1]
-        amount = t[1].items()[1][1]
-        day = t[1].items()[5][1]
-        if 'credit' in amount:
-            amount = -1.00 * float(amount.split('$')[1])
-        else:
-            amount = float(amount.split('$')[1])
-        if comment == 'Dining Dollars':
-            dining_transactions += "{day: '%s', balance: %s}, " % (day, dd_balance)
-            dd_balance = dd_balance + amount
-        if comment == 'Schillers-Student':
-            schiller_transactions += "{day: '%s', balance: %s}, " % (day, s_balance)
-            s_balance = s_balance + amount
-    dining_transactions = dining_transactions[:-2] + ']'
-    schiller_transactions = schiller_transactions[:-2] + ']'
-    if len(dining_transactions) < 2:
-        dining_transactions = "[{day: '%s', balance: %s}, {day: '%s', balance: %s}]" % (datetime.datetime.strftime(datetime.datetime.now() + datetime.timedelta(days=-1), '%Y-%m-%d %H:%M'), dd_balance, time.strftime('%Y-%m-%d %H:%M'), dd_balance)
-    if len(schiller_transactions) < 2:
-        schiller_transactions = "[{day: '%s', balance: %s}, {day: '%s', balance: %s}]" % (datetime.datetime.strftime(datetime.datetime.now() + datetime.timedelta(days=-1), '%Y-%m-%d %H:%M'), s_balance, time.strftime('%Y-%m-%d %H:%M'), s_balance)
+    dining_transactions = ''
+    schiller_transactions = ''
+    
+    if 'spending' in output:
+    	for k, v in output['spending'].items():
+            transactions.append((k, v))
+    	transactions.sort(key=lambda tup: tup[0], reverse=True)
+    	dd_balance = float(output['dining_dollars'])
+    	s_balance = float(output['schillers'])
+    	dining_transactions = '['
+    	schiller_transactions = '['
+    	for t in transactions:
+            comment = t[1].items()[0][1]
+            amount = t[1].items()[1][1]
+            day = t[1].items()[5][1]
+            if 'credit' in amount:
+            	amount = -1.00 * float(amount.split('$')[1])
+            else:
+            	amount = float(amount.split('$')[1])
+            if comment == 'Dining Dollars':
+            	dining_transactions += "{day: '%s', balance: %s}, " % (day, dd_balance)
+            	dd_balance = dd_balance + amount
+            if comment == 'Schillers-Student':
+           	schiller_transactions += "{day: '%s', balance: %s}, " % (day, s_balance)
+            	s_balance = s_balance + amount
+    	dining_transactions = dining_transactions[:-2] + ']'
+    	schiller_transactions = schiller_transactions[:-2] + ']'
+    	if len(dining_transactions) < 2:
+            dining_transactions = "[{day: '%s', balance: %s}, {day: '%s', balance: %s}]" % (datetime.datetime.strftime(datetime.datetime.now() + datetime.timedelta(days=-1), '%Y-%m-%d %H:%M'), dd_balance, time.strftime('%Y-%m-%d %H:%M'), dd_balance)
+    	if len(schiller_transactions) < 2:
+            schiller_transactions = "[{day: '%s', balance: %s}, {day: '%s', balance: %s}]" % (datetime.datetime.strftime(datetime.datetime.now() + datetime.timedelta(days=-1), '%Y-%m-%d %H:%M'), s_balance, time.strftime('%Y-%m-%d %H:%M'), s_balance)
 
     outputJSON = json.dumps(output)
     return outputJSON, dining_transactions, schiller_transactions

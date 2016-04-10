@@ -4,6 +4,7 @@ import os
 import scraper
 import json
 import time
+import datetime
 
 # create the application object
 app = Flask(__name__)
@@ -34,10 +35,13 @@ def home():
     JSON, dining_transactions, schiller_transactions = scraper.main(infoList[0], infoList[1])
 
     parseJSON = json.loads(JSON)
-    dining_dollars = "$" +  parseJSON["dining_dollars"]
-    schillers = "$" +  parseJSON["schillers"]
+    dining_dollars = parseJSON["dining_dollars"]
+    schillers = parseJSON["schillers"]
     guest_swipes = parseJSON["guest_meals"]
-    meals_left = parseJSON["meals_week"]
+    if 'meals_week' in parseJSON:
+	meals_left = parseJSON["meals_week"]
+    else:
+ 	meals_left = ''
     json_obj = JSON
 
     temp = 0
@@ -47,8 +51,21 @@ def home():
         meals_left = guest_swipes
         guest_swipes = temp
 
-    spending = parseJSON["spending"]
-    swipes = parseJSON["swipes"]
+    if 'spending' in parseJSON:
+    	spending = parseJSON["spending"]
+    else:
+	spending = ''
+
+	dining_transactions = "[{day: '%s', balance: %s}, {day: '%s', balance: %s}]" % (datetime.datetime.strftime(datetime.datetime.now() + datetime.timedelta(days=-1), '%Y-%m-%d %H:%M'), dining_dollars, time.strftime('%Y-%m-%d %H:%M'), dining_dollars)
+
+	schiller_transactions = "[{day: '%s', balance: %s}, {day: '%s', balance: %s}]" % (datetime.datetime.strftime(datetime.datetime.now() + datetime.timedelta(days=-1), '%Y-%m-%d %H:%M'), schillers, time.strftime('%Y-%m-%d %H:%M'), schillers)
+	 
+ 
+    if 'swipes' in parseJSON:
+    	swipes = parseJSON["swipes"]
+    else:
+	swipes = ''
+
     week, diningDollarBudget, laundryLeft, LDCCardSwipes, burtonCardSwipes = getASI(parseJSON)
 
     return render_template('index.html', dining=dining_dollars, meals=meals_left, schill=schillers, guest=guest_swipes, spending=spending, swipes=swipes, laundry=laundryLeft, diningBudget=diningDollarBudget, ldc=LDCCardSwipes, burton=burtonCardSwipes, dining_transactions=dining_transactions, schiller_transactions=schiller_transactions)
