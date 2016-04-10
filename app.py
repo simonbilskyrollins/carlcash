@@ -23,24 +23,26 @@ def login():
 
 @app.route('/index.html')
 def home():
-	infoList = ['', '']
-	j = 0
-	for i in session.pop('mylist', []):
-		infoList[j] = i 
-		j += 1
-	JSON = scraper.main(infoList[0], infoList[1])
-	
-	parseJSON = json.loads(JSON)
-	dining_dollars = parseJSON["dining_dollars"]
-	schillers = parseJSON["schillers"]
-	guest_swipes = parseJSON["guest_meals"]
-	meals_left = parseJSON["meals_week"]
-	spending = parseJSON["spending"]
-	swipes = parseJSON["swipes"]
-	
-	laundryLeft = float(schillers)//2.25
+    infoList = ['', '']
+    j = 0
+    for i in session.pop('mylist', []):
+        infoList[j] = i 
+        j += 1
+    JSON = scraper.main(infoList[0], infoList[1])
+    
+    parseJSON = json.loads(JSON)
+    dining_dollars = parseJSON["dining_dollars"]
+    schillers = parseJSON["schillers"]
+    guest_swipes = parseJSON["guest_meals"]
+    meals_left = parseJSON["meals_week"]
+    spending = parseJSON["spending"]
+    swipes = parseJSON["swipes"]
+    
+    laundryLeft = float(schillers)//2.25
 
-	return render_template('index.html', dining=dining_dollars, meals=meals_left, schill=schillers, guest=guest_swipes, spending=spending, swipes=swipes, laundry=laundryLeft)
+    json_obj = '[{week: 0, currentRate: 300, ideal: 300,}, {week: 1, currentRate: 280, ideal: 270,}]'
+
+    return render_template('index.html', dining=dining_dollars, meals=meals_left, schill=schillers, guest=guest_swipes, spending=spending, swipes=swipes, json_obj=json_obj, laundry=laundryLeft)
 
 # start the server with the 'run()' method
 if __name__ == '__main__':
