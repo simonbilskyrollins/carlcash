@@ -108,9 +108,9 @@ def main(un, pw):
     dining_transactions = dining_transactions[:-2] + ']'
     schiller_transactions = schiller_transactions[:-2] + ']'
     if len(dining_transactions) < 2:
-        dining_transactions = '[{day: 0, balance: %s,}, {day: %s, balance: %s}]' % (dd_balance, getDay(time.strftime('%a, %b %d %Y %I:%M %p')), dd_balance)
+        dining_transactions = "[{day: '%s', balance: %s}, {day: '%s', balance: %s}]" % (time.strftime(datetime.datetime.now() + datetime.timedelta(days=-1), '%Y-%m-%d %H:%M'), dd_balance, time.strftime('%Y-%m-%d %H:%M'), dd_balance)
     if len(schiller_transactions) < 2:
-        schiller_transactions = '[{day: 0, balance: %s,}, {day: %s, balance: %s}]' % (s_balance, getDay(time.strftime('%a, %b %d %Y %I:%M %p')), s_balance)
+        schiller_transactions = "[{day: '%s', balance: %s}, {day: '%s', balance: %s}]" % (time.strftime(datetime.datetime.now() + datetime.timedelta(days=-1), '%Y-%m-%d %H:%M'), s_balance, time.strftime('%Y-%m-%d %H:%M'), s_balance)
 
     outputJSON = json.dumps(output)
     return outputJSON, dining_transactions, schiller_transactions
@@ -121,9 +121,6 @@ def getDay(date_string):
     nice_date = datetime.datetime.strptime(date_string, '%a, %b %d %Y %I:%M %p')
     morris_date = datetime.datetime.strftime(nice_date, '%Y-%m-%d %H:%M')
     return morris_date
-    # delta = end_of_term - nice_date
-    # day = delta.days
-    # return 72 - day
 
 if __name__ == '__main__':
     un = sys.argv[1]
