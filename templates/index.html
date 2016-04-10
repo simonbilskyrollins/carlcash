@@ -36,6 +36,8 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <script>data={{json_obj|safe}};</script>
+
 </head>
 
 <body>
@@ -325,7 +327,121 @@
     <!-- Morris Charts JavaScript -->
     <script src="{{ url_for('static', filename='bower_components/raphael/raphael-min.js') }}"></script>
     <script src="{{ url_for('static', filename='bower_components/morrisjs/morris.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/morris-data.js') }}"></script>
+<!--     <script src="{{ url_for('static', filename='js/morris-data.js') }}"></script> -->
+    <script type="text/javascript">
+        $(function() {
+            
+            Morris.Line({
+                element: 'morris-area-chart',
+                data: data,
+                xkey: "week",
+                ykeys: ['currentRate','ideal'],
+                labels: ['currentRate','ideal'],
+                pointSize: 2,
+                hideHover: 'auto',
+                hoverCallback: function (index, options, content, row) { 
+                    var pos = content.search("<div class='morris-hover-point'");
+                    var res = content.slice(pos, content.length);
+                    return "Week " + index + "<p>" + res;
+                },
+                resize: true,
+                behaveLikeLine: true,
+                xLabelFormat: function (x) {return ""},
+            });
+            
+            Morris.Line({
+                element: 'morris-area-chart1',
+                data: [{
+                    week: 0,
+                    schillers: 2.5,
+                }, {
+                    week: 1,
+                    schillers: 22.5,
+                }, {
+                    week: 2,
+                    schillers: 20,
+                }, {
+                    week: 3,
+                    schillers: 15,
+                }, {
+                    week: 4,
+                    schillers: 15,
+                }, {
+                    week: 5,
+                    schillers: 10,
+                }, {
+                    week: 6,
+                    schillers: 10,
+                }, {
+                    week: 7,
+                    schillers: 5,
+                }, {
+                    week: 8,
+                    schillers: 5,
+                }, {
+                    week: 9,
+                    schillers: 25,
+                }, {
+                    week: 10,
+                    schillers: 20  
+                }],
+                
+                xkey: "week",
+                ykeys: ['schillers'],
+                labels: ['schillers'],
+                pointSize: 2,
+                hideHover: 'auto',
+                hoverCallback: function (index, options, content, row) { 
+                    var pos = content.search("<div class='morris-hover-point'");
+                    var res = content.slice(pos, content.length);
+                    return "Week " + index + "<p>" + res;
+                },
+                resize: true,
+                smooth: false,
+                behaveLikeLine: true,
+                xLabelFormat: function (x) {return ""},
+            });
+
+            Morris.Bar({
+                element: 'morris-bar-chart',
+                data: [{
+                    y: '2006',
+                    a: 100,
+                    b: 90
+                }, {
+                    y: '2007',
+                    a: 75,
+                    b: 65
+                }, {
+                    y: '2008',
+                    a: 50,
+                    b: 40
+                }, {
+                    y: '2009',
+                    a: 75,
+                    b: 65
+                }, {
+                    y: '2010',
+                    a: 50,
+                    b: 40
+                }, {
+                    y: '2011',
+                    a: 75,
+                    b: 65
+                }, {
+                    y: '2012',
+                    a: 100,
+                    b: 90
+                }],
+                xkey: 'y',
+                ykeys: ['a', 'b'],
+                labels: ['Series A', 'Series B'],
+                hideHover: 'auto',
+                resize: true
+            });
+
+        });
+    </script>
 
     <!-- Custom Theme JavaScript -->
     <script src="{{ url_for('static', filename='dist/js/sb-admin-2.js') }}"></script>

@@ -6,6 +6,7 @@ import sys
 import mechanize
 import json
 import re
+import time
 from bs4 import BeautifulSoup
 
 def main(un, pw):
@@ -36,10 +37,10 @@ def main(un, pw):
         p = p.get_text()
         if p.find("Dining") != -1:
             dining = p.split('$')[1]
-	    schillers_dining['dining_dollars'] = dining
+            schillers_dining['dining_dollars'] = dining
         elif "Schillers-Student" in p:
             schillers = p.split('$')[1]
-	    schillers_dining['schillers'] = schillers
+            schillers_dining['schillers'] = schillers
 
     output.update(schillers_dining)
 
@@ -78,6 +79,8 @@ def main(un, pw):
                 elif col_type == 'date':
                     row_data[col_type] = date
             date = row_data['date']
+            week = getWeek(date)
+            row_data['week'] = week
             data[i] = row_data
         table_data.append(data)
     output['spending'] = table_data[0]
@@ -86,9 +89,34 @@ def main(un, pw):
     outputJSON = json.dumps(output)
     return outputJSON
 
+def getWeek(date):
+    month = int(time.strftime("%m"))
+    day = int(time.strftime("%d"))
+    week = 0
+    if ((month==3) and (28<=day) or (month==4) and (day<=3)):
+        week=1
+    elif ((month==4) and (4<=day) and (day<=10)):
+        week=2
+    elif ((month==4) and (11<=day) and (day<=17)):
+        week=3
+    elif ((month==4) and (18<=day) and (day<=24)):
+        week=4
+    elif ((month==4) and (25<=day) or (month==5) and (day<=1)):
+        week=5
+    elif ((month==5) and (2<=day) and (day<=8)):
+        week=6
+    elif ((month==5) and (9<=day) and (day<=15)):
+        week=7
+    elif ((month==5) and (16<=day) and (day<=22)):
+        week=8
+    elif ((month==5) and (23<=day) and (day<=29)):
+        week=9
+    elif ((month==5) and (30<=day) or (month==6) and (day<=7)):
+        week=10
+    return week
+
 if __name__ == '__main__':
     un = sys.argv[1]
     pw = sys.argv[2]
     outputJSON = main(un, pw)
     print outputJSON
-    
