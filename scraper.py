@@ -75,6 +75,8 @@ def main(un, pw):
             row_data = {}
             for col in cols:
                 col_type = col['class'][0]
+                if col_type == '':
+                    col_type = 'amount' #handle edge case where amount is actually credit amount which is parsed as empty string
                 if col.get_text():
                     row_data[col_type] = col.get_text()
                 elif col_type == 'date':
@@ -96,19 +98,18 @@ def main(un, pw):
     dining_transactions = '['
     schiller_transactions = '['
     for t in transactions:
-        print t
-        comment = t[1].items()[0][1]
-        amount = t[1].items()[1][1]
-        day = t[1].items()[5][1]
+        comment = t[1]['comment']
+        day = t[1]['date'] + ' ' + t[1]['time']
+        amount = t[1]['amount']
         if 'credit' in amount:
             amount = -1.00 * float(amount.split('$')[1])
         else:
             amount = float(amount.split('$')[1])
         if comment == 'Dining Dollars':
-            dining_transactions += "{day: '%s', balance: %s}, " % (day, dd_balance)
+            dining_transactions += "{day: '%s', balance: %s}, " % (getDay(day), dd_balance)
             dd_balance = dd_balance + amount
         if comment == 'Schillers-Student':
-            schiller_transactions += "{day: '%s', balance: %s}, " % (day, s_balance)
+            schiller_transactions += "{day: '%s', balance: %s}, " % (getDay(day), s_balance)
             s_balance = s_balance + amount
     dining_transactions = dining_transactions[:-2] + ']'
     schiller_transactions = schiller_transactions[:-2] + ']'
@@ -122,7 +123,6 @@ def main(un, pw):
 
 
 def getDay(date_string):
-    end_of_term = datetime.date(2016, 6, 7)
     nice_date = datetime.datetime.strptime(date_string, '%a, %b %d %Y %I:%M %p')
     morris_date = datetime.datetime.strftime(nice_date, '%Y-%m-%d %H:%M')
     return morris_date
