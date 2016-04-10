@@ -193,25 +193,6 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-bar-chart-o fa-fw"></i> Bar Chart Example
-                            <div class="pull-right">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                        Actions
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu pull-right" role="menu">
-                                        <li><a href="#">Action</a>
-                                        </li>
-                                        <li><a href="#">Another action</a>
-                                        </li>
-                                        <li><a href="#">Something else here</a>
-                                        </li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">Separated link</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -304,17 +285,7 @@
                             <div class="list-group">
                                 <a class="list-group-item">
                                     <i class="fa fa-dollar fa-fw"></i> Weekly Dining Dollar Budget
-                                    <span class="pull-right text-muted small"><em>30</em>
-                                    </span>
-                                </a>
-                                <a class="list-group-item">
-                                    <i class="fa fa-dollar fa-fw"></i> Spending in Sayles
-                                    <span class="pull-right text-muted small"><em>12</em>
-                                    </span>
-                                </a>
-                                <a class="list-group-item">
-                                    <i class="fa fa-dollar fa-fw"></i> Spending in Weitz
-                                    <span class="pull-right text-muted small"><em>4</em>
+                                    <span class="pull-right text-muted small"><em>{{diningBudget}}</em>
                                     </span>
                                 </a>
                                 <a class="list-group-item">
@@ -323,33 +294,13 @@
                                     </span>
                                 </a>
                                 <a class="list-group-item">
-                                    <i class="fa fa-money fa-fw"></i> Schiller Usage: Bookstore
-                                    <span class="pull-right text-muted small"><em>112</em>
-                                    </span>
-                                </a>
-                                <a class="list-group-item">
-                                    <i class="fa fa-money fa-fw"></i> Schiller Usage: Laundry
-                                    <span class="pull-right text-muted small"><em>{{laundry}}</em>
-                                    </span>
-                                </a>
-                                <a class="list-group-item">
-                                    <i class="fa fa-money fa-fw"></i> Schiller Usage: Vending
-                                    <span class="pull-right text-muted small"><em>10</em>
-                                    </span>
-                                </a>
-                                <a class="list-group-item">
-                                    <i class="fa fa-money fa-fw"></i> Schiller Usage: Other
-                                    <span class="pull-right text-muted small"><em>0</em>
-                                    </span>
-                                </a>
-                                <a class="list-group-item">
                                     <i class="fa fa-spoon fa-fw"></i> Meal Swipes in Burton
-                                    <span class="pull-right text-muted small"><em>2</em>
+                                    <span class="pull-right text-muted small"><em>{{burton}}</em>
                                     </span>
                                 </a>
                                  <a class="list-group-item">
                                     <i class="fa fa-spoon fa-fw"></i> Meal Swipes in LDC
-                                    <span class="pull-right text-muted small"><em>8</em>
+                                    <span class="pull-right text-muted small"><em>{{ldc}}</em>
                                     </span>
                                 </a>
                             </div>
