@@ -36,6 +36,7 @@ def home():
 	schillers = "$" +  parseJSON["schillers"]
 	guest_swipes = parseJSON["guest_meals"]
 	meals_left = parseJSON["meals_week"]
+	json_obj = JSON
 	
 	temp = 0
 	if guest_swipes > 3:
@@ -47,7 +48,7 @@ def home():
 	swipes = parseJSON["swipes"]
 	week, diningDollarBudget, laundryLeft, LDCCardSwipes, burtonCardSwipes = getASI(parseJSON)
 	
-	return render_template('index.html', dining=dining_dollars, meals=meals_left, schill=schillers, guest=guest_swipes, spending=spending, swipes=swipes, laundry=laundryLeft, diningBudget=diningDollarBudget, ldc=LDCCardSwipes, burton=burtonCardSwipes)
+	return render_template('index.html', dining=dining_dollars, meals=meals_left, schill=schillers, guest=guest_swipes, spending=spending, swipes=swipes, laundry=laundryLeft, diningBudget=diningDollarBudget, ldc=LDCCardSwipes, burton=burtonCardSwipes, json_obj = json_obj)
 
 def getASI(parseJSON):
 	dining_dollars = float(parseJSON["dining_dollars"])
