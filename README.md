@@ -1,1 +1,2 @@
-# carlhacks-take2
+# CarlCash
+CarlCash is the best way for a Carleton student to check their meal plan balances, including dining dollars, as well as their Schiller balance (the college's currency). Our web app also provides a variety of data visualizations to better help students understand and plan out their spending habits in regards to the college. Using a combination of Flask and Bootstrap, we provide appealing graphics and an easy-to-use interface, allowing students to access their information in a more convenient way than ever.
