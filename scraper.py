@@ -28,7 +28,13 @@ def main(un, pw):
     logged_in = br.submit()
     logincheck = logged_in.read()
 
+
     soup = BeautifulSoup(logincheck, 'html.parser')
+
+    for p in soup.find_all('p'):
+	p = p.get_text()
+	if p.find("Dining") == -1:
+	    return '', '', ''
 
     output = {}
 

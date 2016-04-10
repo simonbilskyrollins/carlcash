@@ -32,9 +32,14 @@ def home():
     for i in session.pop('mylist', []):
         infoList[j] = i 
         j += 1
+
     JSON, dining_transactions, schiller_transactions = scraper.main(infoList[0], infoList[1])
 
+    if JSON == '':
+	return redirect(url_for('login'))
+
     parseJSON = json.loads(JSON)
+
     dining_dollars = parseJSON["dining_dollars"]
     schillers = parseJSON["schillers"]
     guest_swipes = parseJSON["guest_meals"]
