@@ -97,7 +97,7 @@ def main(un, pw):
     dining_transactions = '['
     schiller_transactions = '['
     for t in transactions:
-        print t[1].items()
+        #print t[1].items()
         comment = t[1].items()[0][1]
         amount = float(t[1].items()[1][1][2:])
         day = t[1].items()[5][1]
