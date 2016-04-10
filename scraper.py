@@ -108,9 +108,9 @@ def main(un, pw):
     dining_transactions = dining_transactions[:-2] + ']'
     schiller_transactions = schiller_transactions[:-2] + ']'
     if len(dining_transactions) < 2:
-        dining_transactions = "[{day: '%s', balance: %s}, {day: '%s', balance: %s}]" % (time.strftime(datetime.datetime.now() + datetime.timedelta(days=-1), '%Y-%m-%d %H:%M'), dd_balance, time.strftime('%Y-%m-%d %H:%M'), dd_balance)
+        dining_transactions = "[{day: '%s', balance: %s}, {day: '%s', balance: %s}]" % (datetime.datetime.strftime(datetime.datetime.now() + datetime.timedelta(days=-1), '%Y-%m-%d %H:%M'), dd_balance, time.strftime('%Y-%m-%d %H:%M'), dd_balance)
     if len(schiller_transactions) < 2:
-        schiller_transactions = "[{day: '%s', balance: %s}, {day: '%s', balance: %s}]" % (time.strftime(datetime.datetime.now() + datetime.timedelta(days=-1), '%Y-%m-%d %H:%M'), s_balance, time.strftime('%Y-%m-%d %H:%M'), s_balance)
+        schiller_transactions = "[{day: '%s', balance: %s}, {day: '%s', balance: %s}]" % (datetime.datetime.strftime(datetime.datetime.now() + datetime.timedelta(days=-1), '%Y-%m-%d %H:%M'), s_balance, time.strftime('%Y-%m-%d %H:%M'), s_balance)
 
     outputJSON = json.dumps(output)
     return outputJSON, dining_transactions, schiller_transactions
