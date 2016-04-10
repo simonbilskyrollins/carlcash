@@ -11,11 +11,11 @@ app.secret_key = os.urandom(24)
 def login():
     error = None
     if request.method == 'POST':
-	form = request.form
-	form_un = form['username']
-	form_pw = form['password']
-	mylist = [form_un, form_pw]
-	session['mylist'] = mylist
+        form = request.form
+        form_un = form['username']
+        form_pw = form['password']
+        mylist = [form_un, form_pw]
+        session['mylist'] = mylist
         return redirect(url_for('home'))
 
     return render_template('login.html', error = error);
@@ -25,8 +25,8 @@ def home():
     infoList = ['', '']
     j = 0
     for i in session.pop('mylist', []):
-	infoList[j] = i	
-	j += 1
+        infoList[j] = i 
+        j += 1
     JSON = scraper.main(infoList[0], infoList[1])
     print(JSON)
     return render_template('index.html')
