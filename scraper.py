@@ -81,7 +81,7 @@ def main(un, pw):
                 elif col_type == 'date':
                     row_data[col_type] = date
             date = row_data['date']
-            day = getDay(date)
+            day = getDay(date + ' ' + row_data['time'])
             row_data['day'] = day
             data[i] = row_data
         table_data.append(data)
@@ -97,33 +97,35 @@ def main(un, pw):
     dining_transactions = '['
     schiller_transactions = '['
     for t in transactions:
-        print t[1].items()
         comment = t[1].items()[0][1]
         amount = float(t[1].items()[1][1][2:])
         day = t[1].items()[5][1]
         if comment == 'Dining Dollars':
-            dining_transactions += '{day: %s, balance: %s,}, ' % (day, dd_balance)
+            dining_transactions += "{day: '%s', balance: %s}, " % (day, dd_balance)
             dd_balance = dd_balance + amount
         if comment == 'Schillers-Student':
-            schiller_transactions += '{day: %s, balance: %s,}, ' % (day, s_balance)
+            schiller_transactions += "{day: '%s', balance: %s}, " % (day, s_balance)
             s_balance = s_balance + amount
     dining_transactions = dining_transactions[:-2] + ']'
     schiller_transactions = schiller_transactions[:-2] + ']'
     if len(dining_transactions) < 2:
-        dining_transactions = '[{day: 0, balance: %s,}, {day: %s, balance: %s,}]' % (dd_balance, getDay(time.strftime('%a, %b %d %Y')), dd_balance)
+        dining_transactions = '[{day: 0, balance: %s,}, {day: %s, balance: %s}]' % (dd_balance, getDay(time.strftime('%a, %b %d %Y')), dd_balance)
     if len(schiller_transactions) < 2:
-        schiller_transactions = '[{day: 0, balance: %s,}, {day: %s, balance: %s,}]' % (s_balance, getDay(time.strftime('%a, %b %d %Y')), s_balance)
+        schiller_transactions = '[{day: 0, balance: %s,}, {day: %s, balance: %s}]' % (s_balance, getDay(time.strftime('%a, %b %d %Y')), s_balance)
 
+    print dining_transactions
     outputJSON = json.dumps(output)
     return outputJSON, dining_transactions, schiller_transactions
 
 
 def getDay(date_string):
     end_of_term = datetime.date(2016, 6, 7)
-    nice_date = datetime.datetime.strptime(date_string, '%a, %b %d %Y').date()
-    delta = end_of_term - nice_date
-    day = delta.days
-    return 72 - day
+    nice_date = datetime.datetime.strptime(date_string, '%a, %b %d %Y %I:%M %p')
+    morris_date = datetime.datetime.strftime(nice_date, '%Y-%m-%d %H:%M')
+    return morris_date
+    # delta = end_of_term - nice_date
+    # day = delta.days
+    # return 72 - day
 
 if __name__ == '__main__':
     un = sys.argv[1]

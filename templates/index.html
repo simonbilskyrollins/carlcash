@@ -276,16 +276,31 @@
                 xkey: "day",
                 ykeys: ['balance'],
                 labels: ['Dining Dollar Balance'],
+                xLabels: 'day',
+                preUnits: '$',
+                ymin: 'auto',
+                ymax: 'auto',
                 pointSize: 2,
+                lineWidth: 4,
+                dateFormat: function (date) {
+                    d = new Date(date);
+                    return d.getDate()+'/'+(d.getMonth()+1)+'/'+d.getFullYear(); 
+                    },
                 hideHover: 'auto',
                 hoverCallback: function (index, options, content, row) { 
                     var pos = content.search("<div class='morris-hover-point'");
                     var res = content.slice(pos, content.length);
-                    return "Day " + index + "<p>" + res;
+                    return res;
                 },
                 resize: true,
+                smooth: false,
                 behaveLikeLine: true,
-                xLabelFormat: function (x) {return ""},
+                xLabelFormat: function (date) {
+                    return (date.getMonth()+1)+'/'+date.getDate();
+                    },
+                yLabelFormat: function (y) {
+                    return '$'+y.toFixed(2);
+                    },
             });
             
             Morris.Line({
@@ -294,17 +309,31 @@
                 xkey: "day",
                 ykeys: ['balance'],
                 labels: ['Schiller Balance'],
+                xLabels: 'day',
+                preUnits: '$',
+                ymin: 'auto',
+                ymax: 'auto',
                 pointSize: 2,
+                lineWidth: 4,
+                dateFormat: function (date) {
+                    d = new Date(date);
+                    return d.getDate()+'/'+(d.getMonth()+1)+'/'+d.getFullYear(); 
+                    },
                 hideHover: 'auto',
                 hoverCallback: function (index, options, content, row) { 
                     var pos = content.search("<div class='morris-hover-point'");
                     var res = content.slice(pos, content.length);
-                    return "Day " + index + "<p>" + res;
+                    return res;
                 },
                 resize: true,
                 smooth: false,
                 behaveLikeLine: true,
-                xLabelFormat: function (x) {return ""},
+                xLabelFormat: function (date) {
+                    return (date.getMonth()+1)+'/'+date.getDate();
+                    },
+                yLabelFormat: function (y) {
+                    return '$'+y.toFixed(2);
+                    },
             });
 
             Morris.Donut({
