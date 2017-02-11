@@ -30,7 +30,7 @@ def home():
     infoList = ['', '']
     j = 0
     for i in session.pop('mylist', []):
-        infoList[j] = i 
+        infoList[j] = i
         j += 1
 
     JSON, dining_transactions, schiller_transactions = scraper.main(infoList[0], infoList[1])
@@ -50,7 +50,7 @@ def home():
     json_obj = JSON
 
     temp = 0
-    
+
     if int(guest_swipes) > 3:
         temp = meals_left
         meals_left = guest_swipes
@@ -64,8 +64,8 @@ def home():
 	dining_transactions = "[{day: '%s', balance: %s}, {day: '%s', balance: %s}]" % (datetime.datetime.strftime(datetime.datetime.now() + datetime.timedelta(days=-1), '%Y-%m-%d %H:%M'), dining_dollars, time.strftime('%Y-%m-%d %H:%M'), dining_dollars)
 
 	schiller_transactions = "[{day: '%s', balance: %s}, {day: '%s', balance: %s}]" % (datetime.datetime.strftime(datetime.datetime.now() + datetime.timedelta(days=-1), '%Y-%m-%d %H:%M'), schillers, time.strftime('%Y-%m-%d %H:%M'), schillers)
-	 
- 
+
+
     if 'swipes' in parseJSON:
     	swipes = parseJSON["swipes"]
     else:
@@ -112,30 +112,17 @@ def LDCBurtonSwipes(swipes):
 
 
 def getWeek():
-    month = int(time.strftime("%m"))
-    day = int(time.strftime("%d"))
-    week = 0
-    if ((month==3) and (28<=day) or (month==4) and (day<=3)):
-        week=1
-    elif ((month==4) and (4<=day) and (day<=10)):
-        week=2
-    elif ((month==4) and (11<=day) and (day<=17)):
-        week=3
-    elif ((month==4) and (18<=day) and (day<=24)):
-        week=4
-    elif ((month==4) and (25<=day) or (month==5) and (day<=1)):
-        week=5
-    elif ((month==5) and (2<=day) and (day<=8)):
-        week=6
-    elif ((month==5) and (9<=day) and (day<=15)):
-        week=7
-    elif ((month==5) and (16<=day) and (day<=22)):
-        week=8
-    elif ((month==5) and (23<=day) and (day<=29)):
-        week=9
-    elif ((month==5) and (30<=day) or (month==6) and (day<=7)):
-        week=10
-    return week
+    current_date = datetime.datetime.now()
+    month = int(current_date.strftime("%m"))
+    day = int(current_date.strftime("%d"))
+    year_week = current_date.isocalendar()[1]
+    if month <= 3 and day <= 20:
+        week_number_offset = 0
+    elif month <= 6 and day <= 12:
+        week_number_offset = 13
+    elif month >= 9:
+        week_number_offset = 37
+    return year_week - week_number_offset
 
 
 # start the server with the 'run()' method
