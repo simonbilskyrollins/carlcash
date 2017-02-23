@@ -116,12 +116,12 @@ def getWeek():
     month = int(current_date.strftime("%m"))
     day = int(current_date.strftime("%d"))
     year_week = current_date.isocalendar()[1]
-    if month <= 3 and day <= 20:
+    if month < 3 or (month == 3 and day <= 20):
         week_number_offset = 0
-    elif month <= 6 and day <= 12:
-        week_number_offset = 13
     elif month >= 9:
         week_number_offset = 37
+    else:
+        week_number_offset = 13
     return year_week - week_number_offset
 
 
