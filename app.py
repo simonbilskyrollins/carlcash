@@ -10,6 +10,14 @@ import datetime
 app = Flask(__name__)
 
 
+@app.before_first_request
+def setup_logging():
+    if not app.debug:
+        # In production mode, add log handler to sys.stderr.
+        app.logger.addHandler(logging.StreamHandler())
+        app.logger.setLevel(logging.INFO)
+
+
 @app.route('/', methods=['GET', 'POST'])
 def login():
     error = None
@@ -129,7 +137,9 @@ if __name__ == '__main__':
     is_heroku = bool(os.environ.get('HEROKU'))
     if is_heroku:
         secret_key = os.environ.get('SECRET_KEY')
+        debug=False
     else:
         secret_key = os.urandom(24)
+        debug=True
     app.secret_key = secret_key
-    app.run(debug=True)
+    app.run(debug=debug)
