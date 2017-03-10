@@ -111,9 +111,10 @@ def main(un, pw):
         dining_transactions = '['
         schiller_transactions = '['
         for t in transactions:
-            comment = t[1].items()[0][1]
-            amount = t[1].items()[1][1]
-            day = t[1].items()[5][1]
+            transaction = t[1]
+            comment = transaction['comment']
+            amount = transaction['amount']
+            day = transaction['day']
             if 'credit' in amount:
                 amount = -1.00 * float(amount.split('$')[1])
             else:
