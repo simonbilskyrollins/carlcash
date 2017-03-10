@@ -1,5 +1,6 @@
 # import the Flask class from the flask module
 from flask import Flask, render_template, redirect, url_for, request, session
+import logging
 import os
 import scraper
 import json
@@ -8,6 +9,15 @@ import datetime
 
 # create the application object
 app = Flask(__name__)
+is_heroku = bool(os.environ.get('HEROKU'))
+if is_heroku:
+    secret_key = os.environ.get('SECRET_KEY')
+    debug=False
+else:
+    secret_key = os.urandom(24)
+    debug=True
+app.secret_key = secret_key
+app.debug = debug
 
 
 @app.before_first_request
@@ -134,12 +144,4 @@ def getWeek():
 
 # start the server with the 'run()' method
 if __name__ == '__main__':
-    is_heroku = bool(os.environ.get('HEROKU'))
-    if is_heroku:
-        secret_key = os.environ.get('SECRET_KEY')
-        debug=False
-    else:
-        secret_key = os.urandom(24)
-        debug=True
-    app.secret_key = secret_key
-    app.run(debug=debug)
+    app.run()
