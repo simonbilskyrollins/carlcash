@@ -8,7 +8,6 @@ import datetime
 
 # create the application object
 app = Flask(__name__)
-app.secret_key = os.urandom(24)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -91,7 +90,7 @@ def getASI(parseJSON):
 
 
 def diningDollarBudget(dollarsLeft, week):
-    return "$" + str('%.2f' % round(dollarsLeft/(10-week), 2))
+    return "$" + str('%.2f' % round(dollarsLeft/((11-week) or 1), 2))
 
 
 def laundryLeft(schillersLeft):
@@ -127,4 +126,10 @@ def getWeek():
 
 # start the server with the 'run()' method
 if __name__ == '__main__':
+    is_heroku = bool(os.environ.get('HEROKU'))
+    if is_heroku:
+        secret_key = os.environ.get('SECRET_KEY')
+    else:
+        secret_key = os.urandom(24)
+    app.secret_key = secret_key
     app.run(debug=True)
